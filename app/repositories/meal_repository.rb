@@ -9,6 +9,13 @@ class MealRepository
     load_csv if File.exist?(@csv_file)
   end
 
+  def create(meal)
+    meal.id = next_id
+    @meals << meal
+    @next_id += 1
+    save_csv
+  end
+
   private
 
   def load_csv
@@ -21,4 +28,12 @@ class MealRepository
     @next_id = @meals.last.id + 1 unless @meals.empty?
   end
 
+  def save_csv
+    CSV.open(@csv_file, "wb") do |csv|
+      csv << %w[id, name, price]
+      @meals.each do |meal|
+        csv << [meal.id, meal.name, meal.price]
+      end
+    end
+  end
 end
