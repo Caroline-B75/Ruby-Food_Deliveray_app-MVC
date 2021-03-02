@@ -26,3 +26,5 @@ class CustomersController
     @customers_view.display(customers)
   end
 end
+=======
+end
