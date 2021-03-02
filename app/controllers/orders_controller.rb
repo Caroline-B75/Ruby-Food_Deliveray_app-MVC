@@ -23,6 +23,23 @@ class OrdersController
     @order_repo.create(order)
   end
 
+  def list_undelivered_orders
+    undelivered_orders = @order_repo.undelivered_orders
+    @orders_view.display(undelivered_orders)
+  end
+
+  def list_my_orders(current_user)
+    list_my_undelivered_orders(current_user)
+  end
+
+  def mark_as_delivered(current_user)
+    list_my_undelivered_orders(current_user)
+    index = @orders_view.ask_user_for_index
+    my_orders = @order_repo.my_undelivered_orders(current_user)
+    order = my_orders[index]
+    @order_repo.mark_as_delivered(order)
+  end
+
   private
 
   def select_meal
