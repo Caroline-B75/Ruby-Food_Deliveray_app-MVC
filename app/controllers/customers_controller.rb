@@ -15,6 +15,10 @@ class CustomersController
     display_customers
   end
 
+  def list
+    display_customers
+  end
+
   private
 
   def display_customers
